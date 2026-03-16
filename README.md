@@ -23,4 +23,4 @@ How it Works
 - Bit-Mapping: The system checks 7 specific coordinate points (segments) within the ROI. If the pixel density exceeds the sensitivity threshold, the "bit" is set to 1.
 - Dictionary Lookup: The resulting bit-tuple is matched against a predefined map to return the corresponding digit.
   
-![Demonstration](assets/gif.gif)
+![Demonstration](assets/image.gif)
