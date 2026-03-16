@@ -73,44 +73,38 @@ def detectar_completo():
         digitos_encontrados = []
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-        
+
+            #filtro ponto decimal
             if 3 < h <= 25 and 2 < w <= 25:
-                # O ponto deve estar na metade inferior do display para ser real
-                # (Opcional: você pode refinar isso comparando o 'y' do ponto com o 'y' dos dígitos)
                 área = cv2.contourArea(cnt)
-                if área > 5: # Filtra ruídos minúsculos de poeira na tela
+                if área > 5: #filtro poeira 
                     digitos_encontrados.append((x, "."))
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # Verde para o ponto
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
                 continue            
 
             if h > 20:
                 #visualização
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
-                # ROI original
+                #ROI
                 roi_limpa = thresh[y:y+h, x:x+w]
                 
                 altura_alvo = 150
                 largura_alvo = 100
                 
-                # 1. Calcula a nova largura mantendo a proporção baseada na altura
                 escala = altura_alvo / float(h)
                 nova_w = int(w * escala)
                 
-                # 2. Se o dígito for proporcionalmente mais largo que a ROI (ex: ruído ou "8" deitado)
-                # limitamos a largura ao máximo permitido
                 if nova_w > largura_alvo:
                     roi_redimensionada = cv2.resize(roi_limpa, (largura_alvo, altura_alvo))
                     roi = roi_redimensionada
                 else:
-                    # 3. Redimensiona e calcula o preenchimento lateral (padding)
                     roi_redimensionada = cv2.resize(roi_limpa, (nova_w, altura_alvo))
                     
                     delta_w = largura_alvo - nova_w
                     left = delta_w // 2
                     right = delta_w - left
                     
-                    # 4. Garante que os valores de borda não sejam negativos (Proteção contra o Erro)
                     left = max(0, left)
                     right = max(0, right)
                     
