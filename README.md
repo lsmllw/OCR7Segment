@@ -22,3 +22,5 @@ How it Works
 - ROI Normalization: Each digit is resized and padded to a standard 100x150 pixel window.
 - Bit-Mapping: The system checks 7 specific coordinate points (segments) within the ROI. If the pixel density exceeds the sensitivity threshold, the "bit" is set to 1.
 - Dictionary Lookup: The resulting bit-tuple is matched against a predefined map to return the corresponding digit.
+  
+![Demonstration](assets/nome-do-seu-arquivo.gif)
